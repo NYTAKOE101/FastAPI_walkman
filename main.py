@@ -46,5 +46,15 @@ def delete_walkman(walkman_id: int):
 
     raise HTTPException(status_code=404, detail="Walkman not found")
 
+@app.put("/Walkmans/{walkman_id}")
+def update_walkman(walkman_id: int, new_walkman: Walkman):
+    for index, walkman in enumerate(walkmans_db):
+         if walkman.id == walkman_id:
+            new_walkman.id = walkman_id  
+            walkmans_db[index] = new_walkman
+            return {"message": "Walkman updated successfully"}
+         
+    raise HTTPException(status_code=404, detail="Walkman not found")
+
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8000)
